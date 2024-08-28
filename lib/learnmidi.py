@@ -436,7 +436,7 @@ class LearnMIDI:
                         # Save notes to press
                         if msg.type == 'note_on' and msg.velocity > 0 and (
                                 msg.channel == self.hands or self.hands == 0):
-                            if note_position < self.ledstrip.led_number or note_position > 0:
+                            if msg.note >= 36 and msg.note <= 96:
                                 notes_to_press.append(msg.note)
 
                         # Play selected Track
