@@ -2,7 +2,7 @@ from webinterface import webinterface
 from flask import render_template, send_file, request, jsonify
 from werkzeug.security import safe_join
 from lib.functions import (get_last_logs, find_between, theaterChase, theaterChaseRainbow, fireplace, sound_of_da_police, scanner,
-                           breathing, rainbow, rainbowCycle, chords, colormap_animation, fastColorWipe, play_midi, clamp)
+                           breathing, rainbow, rainbowCycle, chords, colormap_animation, fastColorWipe, play_midis, clamp)
 import lib.colormaps as cmap
 import psutil
 import threading
@@ -1095,7 +1095,7 @@ def change_setting():
             logger.warning("Converting failed")
 
     if setting_name == "start_midi_play":
-        webinterface.saving.t = threading.Thread(target=play_midi, args=(value, webinterface.midiports,
+        webinterface.saving.t = threading.Thread(target=play_midis, args=(value, webinterface.midiports,
                                                                          webinterface.saving, webinterface.menu,
                                                                          webinterface.ledsettings,
                                                                          webinterface.ledstrip))

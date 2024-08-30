@@ -66,6 +66,28 @@ def clamp(val, val_min, val_max):
 def shift(lst, num_shifts):
     return lst[num_shifts:] + lst[:num_shifts]
 
+import os
+
+def play_midis(song_path, midiports, saving, menu, ledsettings, ledstrip):
+    midiports.midifile_queue.append((mido.Message('note_on'), time.perf_counter()))
+
+    found = False;
+    directory = "Songs/"
+
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        if filename.endswith(".mid"):
+            print(os.path.join(directory, filename))
+
+            if found == False:
+                if filename != song_path:
+                    continue
+                else:
+                    found = True
+
+            play_midi(filename, midiports, saving, menu, ledsettings, ledstrip)
+        else:
+            continue
 
 def play_midi(song_path, midiports, saving, menu, ledsettings, ledstrip):
     midiports.midifile_queue.append((mido.Message('note_on'), time.perf_counter()))
@@ -124,7 +146,6 @@ def play_midi(song_path, midiports, saving, menu, ledsettings, ledstrip):
         menu.render_message(song_path, "Error while playing song " + str(e), 2000)
         logger.warning(e)
     saving.is_playing_midi.clear()
-
 
 def manage_idle_animation(ledstrip, ledsettings, menu, midiports):
     animation_delay_minutes = int(menu.led_animation_delay)
@@ -916,7 +937,7 @@ def colormap_animation(colormap, ledstrip, ledsettings, menu):
             time.sleep(.1)
             last_state = cover_opened
             cover_opened = GPIO.input(SENSECOVER)
-        
+
         brightness = calculate_brightness(ledsettings)
 
         led_a0 = get_note_position(21, ledstrip, ledsettings)

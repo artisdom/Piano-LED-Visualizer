@@ -869,7 +869,7 @@ class MenuLCD:
 
         # Play MIDI
         if location == "Choose_song":
-            self.saving.t = threading.Thread(target=play_midi, args=(choice, self.midiports, self.saving, self,
+            self.saving.t = threading.Thread(target=play_midis, args=(choice, self.midiports, self.saving, self,
                                                                      self.ledsettings, self.ledstrip))
             self.saving.t.start()
         if location == "Play_MIDI":
